@@ -20,3 +20,16 @@ services:
       timeout: 5s
       retries: 5
 
+  backend:
+    build:
+      context: ./BackEnd
+      dockerfile: Dockerfile
+    container_name: backend_rys_envios
+    env_file:
+      - .env
+    depends_on:
+      database:
+        condition: service_healthy      
+    restart: unless-stopped
+    ports:
+      - "${BACKEND_PORT}:${BACKEND_PORT}"  
