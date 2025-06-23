@@ -1,4 +1,4 @@
-CREATE TABLE clientes (
+CREATE TABLE cliente (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(255) NOT NULL,
     correo VARCHAR(255) UNIQUE NOT NULL,
@@ -6,9 +6,9 @@ CREATE TABLE clientes (
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE direcciones (
+CREATE TABLE direccion (
     id SERIAL PRIMARY KEY,
-    cliente_id INTEGER REFERENCES clientes(id) ON DELETE CASCADE,
+    cliente_id INTEGER REFERENCES cliente(id) ON DELETE CASCADE,
     direccion TEXT NOT NULL,
     ciudad VARCHAR(100) NOT NULL,
     departamento VARCHAR(100),
@@ -17,11 +17,11 @@ CREATE TABLE direcciones (
     creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
-CREATE TABLE envios (
+CREATE TABLE envio (
     id SERIAL PRIMARY KEY,
     codigo_tracking VARCHAR(50) UNIQUE NOT NULL,
-    cliente_origen_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
-    cliente_destino_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
+    cliente_origen_id INTEGER REFERENCES cliente(id) ON DELETE SET NULL,
+    cliente_destino_id INTEGER REFERENCES cliente(id) ON DELETE SET NULL,
     descripcion TEXT,
     peso DECIMAL(10,2),
     valor_envio DECIMAL(12,2),
@@ -30,10 +30,10 @@ CREATE TABLE envios (
     entregado BOOLEAN DEFAULT FALSE
 );
 
-CREATE TABLE estados_envio (
+CREATE TABLE estado_envio (
     id SERIAL PRIMARY KEY,
-    envio_id INTEGER REFERENCES envios(id) ON DELETE CASCADE,
-    estado VARCHAR(100) NOT NULL,  -- Ej: 'En bodega', 'En tránsito', 'Entregado'
-    descripcion TEXT,
+    envio_id INTEGER REFERENCES envio(id) ON DELETE CASCADE,
+    estado VARCHAR(100) NOT NULL, 
+    descripcion_envio TEXT,
     fecha_estado TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

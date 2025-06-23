@@ -2,7 +2,7 @@ package Model
 
 import "time"
 
-type Clientes struct {
+type Cliente struct {
 	ID        int       `gorm:"primaryKey; column:id" json:"id"`
 	Nombre    string    `gorm:"column:nombre" json:"nombre"`
 	Correo    string    `gorm:"column:correo" json:"correo"`
@@ -10,7 +10,7 @@ type Clientes struct {
 	Creado_en time.Time `gorm:"column:creado_en;autoCreateTime" json:"creado_en"`
 }
 
-type Direcciones struct {
+type Direccion struct {
 	ID           int       `gorm:"primaryKey; column:id" json:"id"`
 	ClienteID    int       `gorm:"column:cliente_id" json:"cliente_id"`
 	Direccion    string    `gorm:"column:direccion" json:"direccion"`
@@ -21,7 +21,7 @@ type Direcciones struct {
 	Creado_en    time.Time `gorm:"column:creado_en;autoCreateTime" json:"creado_en"`
 }
 
-type Envios struct {
+type Envio struct {
 	ID                   int       `gorm:"primaryKey; column:id" json:"id"`
 	CodigoTracking       string    `gorm:"unique; column:codigo_tracking" json:"codigo_tracking"`
 	ClienteOrigenID      int       `gorm:"column:cliente_origen_id" json:"cliente_origen_id"`
@@ -34,7 +34,7 @@ type Envios struct {
 	Entregado            bool      `gorm:"column:entregado;default:false" json:"entregado"`
 }
 
-type EstadoEnvios struct {
+type EstadoEnvio struct {
 	ID               int       `gorm:"primaryKey; column:id" json:"id"`
 	EnvioID          int       `gorm:"column:envio_id" json:"envio_id"`
 	Estado           string    `gorm:"column:estado" json:"estado"`
