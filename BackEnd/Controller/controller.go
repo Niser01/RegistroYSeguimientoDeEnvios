@@ -33,3 +33,50 @@ func ControllerRastreoPedido(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 }
+
+func ControllerCrearPedido(w http.ResponseWriter, r *http.Request) {
+	var body_input Services.CrearPedidoInput
+	err := json.NewDecoder(r.Body).Decode(&body_input)
+	if err != nil {
+		http.Error(w, "JSON Invalido", http.StatusBadRequest)
+		return
+	}
+
+	codigoTracking, err := Services.CrearPedido(body_input)
+	if err != nil {
+		mensaje := fmt.Sprintf("Error al crear el nuevo pedido. - %v", err.Error())
+		http.Error(w, mensaje, http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+
+	response := map[string]string{
+		"codigo_tracking": codigoTracking,
+	}
+
+	err = json.NewEncoder(w).Encode(response)
+	if err != nil {
+		http.Error(w, "Error al codificar la respuesta a JSON", http.StatusInternalServerError)
+		return
+	}
+}
+
+func ControllerCrearCliente(w http.ResponseWriter, r *http.Request) {
+	var body_input Services.CrearClienteInput
+
+	err := json.NewDecoder(r.Body).Decode(&body_input)
+	if err != nil {
+		http.Error(w, "JSON Invalido", http.StatusBadRequest)
+		return
+	}
+
+	err = Services.CrearCliente(body_input)
+	if err != nil {
+		mensaje := fmt.Sprintf("Error al crear un nuevo cliente. - %v", err.Error())
+		http.Error(w, mensaje, http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusCreated)
+}

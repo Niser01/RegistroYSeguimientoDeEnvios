@@ -25,6 +25,7 @@ CREATE TABLE envio (
     descripcion TEXT,
     peso DECIMAL(10,2),
     valor_envio DECIMAL(12,2),
+    moneda TEXT,
     fecha_envio TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     fecha_entrega_estimada TIMESTAMP,
     entregado BOOLEAN DEFAULT FALSE

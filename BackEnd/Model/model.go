@@ -29,6 +29,7 @@ type Envio struct {
 	Descripcion          string    `gorm:"column:descripcion" json:"descripcion"`
 	Peso                 float64   `gorm:"column:peso" json:"peso"`
 	ValorEnvio           float64   `gorm:"column:valor_envio" json:"valor_envio"`
+	Moneda               string    `gorm:"column:moneda" json:"moneda"`
 	FechaEnvio           time.Time `gorm:"column:fecha_envio;autoCreateTime" json:"fecha_envio"`
 	FechaEntregaEstimada time.Time `gorm:"column:fecha_entrega_estimada" json:"fecha_entrega_estimada"`
 	Entregado            bool      `gorm:"column:entregado;default:false" json:"entregado"`
@@ -39,5 +40,5 @@ type EstadoEnvio struct {
 	EnvioID          int       `gorm:"column:envio_id" json:"envio_id"`
 	Estado           string    `gorm:"column:estado" json:"estado"`
 	DescripcionEnvio string    `gorm:"column:descripcion_envio" json:"descripcion_envio"`
-	FechaEstado      time.Time `gorm:"column:fecha_estado" json:"fecha_estado"`
+	FechaEstado      time.Time `gorm:"column:fecha_estado;autoCreateTime" json:"fecha_estado"`
 }

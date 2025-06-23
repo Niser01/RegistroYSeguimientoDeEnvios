@@ -1,7 +1,7 @@
 services:
   database:
     image: postgres:latest
-    container_name: database_rys_envios
+    container_name: database_PackandTrack
     env_file:
       - .env
     environment:
@@ -24,7 +24,7 @@ services:
     build:
       context: ./BackEnd
       dockerfile: Dockerfile
-    container_name: backend_rys_envios
+    container_name: backend_PackandTrack
     env_file:
       - .env
     depends_on:
