@@ -22,8 +22,6 @@ CREATE TABLE envios (
     codigo_tracking VARCHAR(50) UNIQUE NOT NULL,
     cliente_origen_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
     cliente_destino_id INTEGER REFERENCES clientes(id) ON DELETE SET NULL,
-    direccion_origen_id INTEGER REFERENCES direcciones(id) ON DELETE SET NULL,
-    direccion_destino_id INTEGER REFERENCES direcciones(id) ON DELETE SET NULL,
     descripcion TEXT,
     peso DECIMAL(10,2),
     valor_envio DECIMAL(12,2),
