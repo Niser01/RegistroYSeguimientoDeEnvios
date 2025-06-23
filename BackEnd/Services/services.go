@@ -174,3 +174,86 @@ func CrearCliente(input CrearClienteInput) error {
 
 	return nil
 }
+
+type ActualizarDireccionInput struct {
+	Correo       string  `json:"correo"`
+	Direccion    *string `json:"direccion"`
+	Ciudad       *string `json:"ciudad"`
+	Departamento *string `json:"departamento"`
+	Pais         *string `json:"pais"`
+	CodigoPostal *string `json:"codigo_postal"`
+}
+
+func ActualizarDireccion(input ActualizarDireccionInput) error {
+	// Buscar cliente por correo
+	var cliente Model.Cliente
+	if err := DataBase.DB.Where("correo = ?", input.Correo).First(&cliente).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return fmt.Errorf("cliente con correo %s no encontrado", input.Correo)
+		}
+		return fmt.Errorf("error consultando cliente: %w", err)
+	}
+
+	// Buscar dirección asociada
+	var direccion Model.Direccion
+	if err := DataBase.DB.Where("cliente_id = ?", cliente.ID).First(&direccion).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return fmt.Errorf("no se encontró dirección registrada para este cliente")
+		}
+		return fmt.Errorf("error consultando dirección: %w", err)
+	}
+
+	// Solo actualizar los campos que vinieron en el JSON
+	if input.Direccion != nil {
+		direccion.Direccion = *input.Direccion
+	}
+	if input.Ciudad != nil {
+		direccion.Ciudad = *input.Ciudad
+	}
+	if input.Departamento != nil {
+		direccion.Departamento = *input.Departamento
+	}
+	if input.Pais != nil {
+		direccion.Pais = *input.Pais
+	}
+	if input.CodigoPostal != nil {
+		direccion.CodigoPostal = *input.CodigoPostal
+	}
+
+	// Guardar cambios en BD
+	if err := DataBase.DB.Save(&direccion).Error; err != nil {
+		return fmt.Errorf("error actualizando dirección: %w", err)
+	}
+
+	return nil
+}
+
+type ActualizarEstadoPedidoInput struct {
+	CodigoTracking   string `json:"codigo_tracking"`
+	Estado           string `json:"estado"`
+	DescripcionEnvio string `json:"descripcion_envio"`
+}
+
+func ActualizarEstadoPedido(input ActualizarEstadoPedidoInput) error {
+	// Buscar el envío por codigo_tracking
+	var envio Model.Envio
+	if err := DataBase.DB.Where("codigo_tracking = ?", input.CodigoTracking).First(&envio).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return fmt.Errorf("envío con código de tracking %s no encontrado", input.CodigoTracking)
+		}
+		return fmt.Errorf("error consultando envío: %w", err)
+	}
+
+	// Crear nuevo estado
+	estado := Model.EstadoEnvio{
+		EnvioID:          envio.ID,
+		Estado:           input.Estado,
+		DescripcionEnvio: input.DescripcionEnvio,
+	}
+
+	if err := DataBase.DB.Create(&estado).Error; err != nil {
+		return fmt.Errorf("error creando nuevo estado: %w", err)
+	}
+
+	return nil
+}

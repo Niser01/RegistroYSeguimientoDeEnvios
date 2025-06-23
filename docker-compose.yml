@@ -33,3 +33,14 @@ services:
     restart: unless-stopped
     ports:
       - "${BACKEND_PORT}:${BACKEND_PORT}"  
+
+  frontend:
+    build:
+      context: ./FrontEnd
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    restart: unless-stopped
+    depends_on:
+      - backend      

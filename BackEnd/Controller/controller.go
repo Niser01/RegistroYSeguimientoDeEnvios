@@ -80,3 +80,40 @@ func ControllerCrearCliente(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }
+
+func ControllerActualizarDireccion(w http.ResponseWriter, r *http.Request) {
+	var body_input Services.ActualizarDireccionInput
+
+	err := json.NewDecoder(r.Body).Decode(&body_input)
+	if err != nil {
+		http.Error(w, "JSON Invalido", http.StatusBadRequest)
+		return
+	}
+
+	err = Services.ActualizarDireccion(body_input)
+	if err != nil {
+		mensaje := fmt.Sprintf("Error al actualizar la direccion del cliente. - %v", err.Error())
+		http.Error(w, mensaje, http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
+
+func ControllerActualizarEstadoPedido(w http.ResponseWriter, r *http.Request) {
+	var body_input Services.ActualizarEstadoPedidoInput
+	err := json.NewDecoder(r.Body).Decode(&body_input)
+	if err != nil {
+		http.Error(w, "JSON Invalido", http.StatusBadRequest)
+		return
+	}
+
+	err = Services.ActualizarEstadoPedido(body_input)
+	if err != nil {
+		mensaje := fmt.Sprintf("Error al actualizar la direccion del cliente. - %v", err.Error())
+		http.Error(w, mensaje, http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+}
