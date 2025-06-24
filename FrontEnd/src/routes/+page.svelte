@@ -17,7 +17,7 @@
   ];
 </script>
 
-<div class="min-h-[calc(100vh-27rem)] flex items-center justify-center px-6 my-16">
+<div class="min-h-[calc(100vh-28rem)] flex items-center justify-center px-6 my-16">
   <div class="w-full max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
     {#each opciones as opcion}
       <div
