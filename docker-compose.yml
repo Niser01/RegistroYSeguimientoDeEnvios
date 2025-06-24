@@ -38,7 +38,9 @@ services:
     build:
       context: ./FrontEnd
       dockerfile: Dockerfile
-    container_name: frontend
+    container_name: frontend_PackandTrack
+    env_file:
+      - .env
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     restart: unless-stopped
