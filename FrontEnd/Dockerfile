@@ -1,4 +1,3 @@
-# Etapa de build
 FROM node:18 AS build
 
 WORKDIR /app
@@ -10,19 +9,14 @@ COPY . .
 
 RUN npm run build
 
-# Etapa de producción (usando nginx o http-server)
 FROM node:18 AS production
 
 WORKDIR /app
 
-# Solo copiamos los archivos de producción (dist)
-COPY --from=build /app/dist ./dist
+RUN npm install -g serve
 
-# Instalamos un servidor estático (puede ser http-server)
-RUN npm install -g http-server
+COPY --from=build /app/build ./build
 
-# Puerto que se expone
 EXPOSE 4173
 
-# Comando para servir el contenido estático
-CMD ["http-server", "dist"]
+CMD ["serve", "-s", "build"]
