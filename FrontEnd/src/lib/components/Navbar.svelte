@@ -4,7 +4,7 @@
     <!-- Logo -->
     <div class="flex items-center space-x-3">
       <a href="/">
-        <img src="/logo_blanco.svg" alt="Logo Empresa" class="h-12 w-auto" />
+        <img src="/P&T_Blanco.svg" alt="Logo Empresa" class="h-12 w-auto" />
       </a>
     </div>
 
@@ -25,7 +25,7 @@
 
         <a href="/rastreo" class="block py-3 border-t border-white md:border-none md:py-0 hover:underline">Rastrea tu pedido</a>
         <a href="/gestion_envios" class="block py-3 border-t border-white md:border-none md:py-0 hover:underline">Gestión de envíos</a>
-        <a href="/nosotros" class="block py-3 border-t border-white md:border-none md:py-0 hover:underline">Sobre nosotros</a>
+        <a href="/sobre_nosostros" class="block py-3 border-t border-white md:border-none md:py-0 hover:underline">Sobre nosotros</a>
 
         <!-- Botón Contacto (solo móvil) -->
         <a href="/contacto"
